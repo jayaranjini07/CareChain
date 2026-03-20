@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CareChain — Unified Medical Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="s-land" class="screen active">
+  <div class="land-grid"></div><div class="land-radial"></div>
+  <div class="land-c fade-in">
+    <div class="land-eye"><span class="blink"></span>Emergency Medical Identity · India</div>
+    <h1 class="land-h1">Care<em>Chain</em></h1>
+    <p class="land-sub">One encrypted identity linking patients, hospitals and authorities — accessible exactly when it matters.</p>
+    <button class="land-cta" id="land-enter-btn">Sign in to CareChain →</button>
+    <div class="land-badges">
+      <span class="lbadge">🧑‍⚕️ Patients</span>
+      <span class="lbadge">🏥 Hospitals</span>
+      <span class="lbadge">🛡️ Police / Authority</span>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH -->
+<div id="s-auth" class="screen">
+  <div class="auth-blob" style="width:500px;height:500px;background:radial-gradient(circle,#ff3b3b,transparent);top:-150px;left:30%"></div>
+  <div class="acard fade-in">
+    <div class="auth-logo">Care<em>Chain</em></div>
+    <button class="back-btn" id="back-btn">← Back</button>
+    <div class="tabs">
+      <button class="tab on" id="t-login">Sign in</button>
+      <button class="tab" id="t-signup">Register</button>
+    </div>
+    <h2 id="auth-h">Welcome back</h2>
+    <p class="sub" id="auth-sub">Enter your email — role is auto-detected from your registered account.</p>
+
+    <!-- LOGIN FIELDS -->
+    <div id="login-fields">
+      <div class="fg"><label class="fl">Email</label><input class="fi" id="l-id" type="email" placeholder="you@email.com" autocomplete="username"/></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password"/></div>
+    </div>
+
+    <!-- SIGNUP FIELDS -->
+    <div id="signup-fields" style="display:none">
+      <div class="fg-row">
+        <div><label class="fl">Full name</label><input class="fi" id="s-name" placeholder="As per Aadhaar"/></div>
+        <div><label class="fl">Date of birth</label><input class="fi" id="s-dob" placeholder="DD/MM/YYYY"/></div>
+      </div>
+      <div class="fg"><label class="fl">Email address</label><input class="fi" type="email" id="s-email" placeholder="you@email.com" autocomplete="username"/></div>
+      <div class="fg"><label class="fl">Password</label><input class="fi" type="password" id="s-pass" placeholder="Min 8 characters" autocomplete="new-password"/></div>
+      <div class="fg-row">
+        <div><label class="fl">Father's name</label><input class="fi" id="s-father" placeholder=""/></div>
+        <div><label class="fl">Mother's name</label><input class="fi" id="s-mother" placeholder=""/></div>
+      </div>
+      <div class="fg-row">
+        <div><label class="fl">Location / City</label><input class="fi" id="s-location" placeholder="e.g. Chennai, TN"/></div>
+        <div><label class="fl">Aadhaar number</label><input class="fi" id="s-aadhar" placeholder="XXXX-XXXX-XXXX"/></div>
+      </div>
+      <div class="fg"><label class="fl">Mobile number</label><input class="fi" id="s-phone" placeholder="+91 XXXXX XXXXX"/></div>
+      <div class="fg">
+        <label class="fl">Registering as</label>
+        <select class="fi" id="s-role">
+          <option value="patient">Patient</option>
+          <option value="hospital">Hospital / Clinic</option>
+          <option value="police">Police / Authority</option>
+        </select>
+      </div>
+      <div id="uid-preview" style="display:none">
+        <div class="uid-box">
+          <div class="lbl">Your CareChain ID (auto-generated)</div>
+          <div class="val" id="uid-val"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error message area -->
+    <div id="auth-error" class="notice n-red" style="display:none;margin-bottom:12px;font-size:13px"></div>
+
+    <button class="cta" id="auth-cta">Sign in →</button>
+
+    <!-- Loading spinner -->
+    <div id="auth-loading" style="display:none;text-align:center;margin-top:14px">
+      <div class="spinner"></div>
+      <p style="font-size:12px;color:var(--t2);margin-top:8px">Please wait…</p>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="s-dash" class="screen">
+  <div class="sidebar">
+    <div class="slogo">Care<em>Chain</em></div>
+    <div class="suser">
+      <div class="avt" id="sb-avt"></div>
+      <div class="sui">
+        <h4 id="sb-name"></h4>
+        <p id="sb-uid"></p>
+        <span class="rp" id="sb-rp"></span>
+      </div>
+    </div>
+    <div id="snav"></div>
+    <div class="sbottom">
+      <button class="ni signout" id="signout-btn">← Sign out</button>
+    </div>
+  </div>
+  <div class="main" id="main">
+    <!-- Loading state for dashboard -->
+    <div id="dash-loading" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;gap:16px">
+      <div class="spinner"></div>
+      <p style="color:var(--t2);font-size:14px">Loading your dashboard…</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: View Record -->
+<div class="ov" id="mv">
+  <div class="modal">
+    <h3 id="mv-h">Patient Record</h3>
+    <div id="mv-body"></div>
+    <div class="mact">
+      <button class="mbtn" id="mv-close">Close</button>
+      <button class="mbtn btn-green" id="mv-sms" style="display:none">📱 Send SMS to Emergency Contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Add Hospital Record -->
+<div class="ov" id="mhr">
+  <div class="modal">
+    <h3>Add Medical Record</h3>
+    <div class="mfg-row">
+      <div><label class="mfl">Visit date</label><input class="mfi" id="hr-date" placeholder="e.g. 14 Jan 2024"/></div>
+      <div><label class="mfl">Patient CareChain ID</label><input class="mfi" id="hr-mid" placeholder="CC-XXXX-KA"/></div>
+    </div>
+    <div class="mfg-row">
+      <div><label class="mfl">Department / Branch</label><input class="mfi" id="hr-dept" placeholder="e.g. General Medicine"/></div>
+      <div><label class="mfl">Admitting doctor</label><input class="mfi" id="hr-doctor" placeholder="Dr. Name, Speciality"/></div>
+    </div>
+    <div class="mfg"><label class="mfl">Diagnosis / Reason for visit</label><input class="mfi" id="hr-reason" placeholder="Primary diagnosis"/></div>
+    <div class="mfg"><label class="mfl">Treatment given</label><textarea class="mfi" id="hr-treatment" placeholder="Medications administered, procedures, IV fluids, monitoring etc."></textarea></div>
+    <div class="mfg">
+      <label class="mfl">Operation / Procedure (type 'None' if not applicable)</label>
+      <input class="mfi" id="hr-ops" placeholder="e.g. Laparoscopic Appendectomy  —  or  None" id="hr-ops-input"/>
+    </div>
+    <div id="op-extra" style="display:none">
+      <div class="mfg-row">
+        <div><label class="mfl">Surgeon</label><input class="mfi" id="hr-surgeon" placeholder="Dr. Name"/></div>
+        <div><label class="mfl">Anaesthetist</label><input class="mfi" id="hr-anaes" placeholder="Dr. Name"/></div>
+      </div>
+      <div class="mfg-row">
+        <div><label class="mfl">Anaesthesia type</label><input class="mfi" id="hr-atype" placeholder="General / Spinal / Local"/></div>
+        <div><label class="mfl">Duration</label><input class="mfi" id="hr-dur" placeholder="e.g. 1 hr 40 min"/></div>
+      </div>
+      <div class="mfg"><label class="mfl">Operative findings</label><textarea class="mfi" id="hr-findings" placeholder="What was found intra-operatively..."></textarea></div>
+      <div class="mfg"><label class="mfl">Post-op instructions</label><textarea class="mfi" id="hr-postop" placeholder="Wound care, activity restrictions, follow-up..."></textarea></div>
+    </div>
+    <div class="mfg"><label class="mfl">Discharge summary</label><textarea class="mfi" id="hr-discharge" placeholder="Condition at discharge, follow-up date, advice..."></textarea></div>
+    <div id="hr-error" class="notice n-red" style="display:none;margin-bottom:8px;font-size:13px"></div>
+    <div class="mact">
+      <button class="mbtn" id="hr-cancel">Cancel</button>
+      <button class="mbtn btn-blue" id="hr-save">Save Record</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Add Prescription -->
+<div class="ov" id="mrx">
+  <div class="modal">
+    <h3>New Prescription</h3>
+    <div class="mfg-row">
+      <div><label class="mfl">Patient CareChain ID</label><input class="mfi" id="rx-mid" placeholder="CC-XXXX-KA"/></div>
+      <div><label class="mfl">Date</label><input class="mfi" id="rx-date" placeholder="DD MMM YYYY"/></div>
+    </div>
+    <div class="mfg-row">
+      <div><label class="mfl">Prescribing doctor</label><input class="mfi" id="rx-doc" placeholder="Dr. Name, Speciality"/></div>
+      <div><label class="mfl">Review date</label><input class="mfi" id="rx-review" placeholder="DD MMM YYYY"/></div>
+    </div>
+    <div class="mfg"><label class="mfl">Diagnosis</label><input class="mfi" id="rx-diag" placeholder="Primary diagnosis for this prescription"/></div>
+    <div class="mfg">
+      <label class="mfl">Medications (one per line: Name | Dose | Frequency | Duration | Notes)</label>
+      <textarea class="mfi" id="rx-meds" style="min-height:100px" placeholder="Tab. Amoxicillin 500mg | 1 tab | TDS | 5 days | After food&#10;Tab. Paracetamol 500mg | 1-2 tabs | PRN | PRN | For fever/pain"></textarea>
+    </div>
+    <div class="mfg"><label class="mfl">Special instructions</label><textarea class="mfi" id="rx-inst" placeholder="e.g. Take with food. Avoid alcohol."></textarea></div>
+    <div id="rx-error" class="notice n-red" style="display:none;margin-bottom:8px;font-size:13px"></div>
+    <div class="mact">
+      <button class="mbtn" id="rx-cancel">Cancel</button>
+      <button class="mbtn btn-teal" id="rx-save">Save Prescription</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="script.js"></script>
+<script type="module" src="upload.js"></script>
+</body>
+</html>
