@@ -1,9 +1,3 @@
-// ============================================================
-//  firebase.js — CareChain Firebase configuration & helpers
-//  Replace the firebaseConfig values with YOUR project's config
-//  from: Firebase Console → Project Settings → Your Apps → SDK
-// ============================================================
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
   getAuth,
@@ -29,10 +23,7 @@ import {
   Timestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ─── YOUR FIREBASE CONFIG ────────────────────────────────────
-// TODO: Replace these placeholder values with your actual Firebase project config.
-// Get it from: https://console.firebase.google.com → Your Project →
-//   Project Settings (gear icon) → General → Your apps → Web app → SDK setup
+
 const firebaseConfig = {
   apiKey: "AIzaSyDXMcJmiocKxj8hCv4avyFhFbDMCvtVcJM",
   authDomain: "carechain-app.firebaseapp.com",
