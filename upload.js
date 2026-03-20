@@ -1,11 +1,3 @@
-// ============================================================
-//  upload.js — CareChain seed data uploader
-//  Run ONCE to populate Firestore with test data.
-//  Open index.html, open DevTools console, then import this
-//  via a temporary <script type="module" src="upload.js"></script>
-//  tag in index.html, or run it via a standalone HTML page.
-// ============================================================
-
 import { db } from "./firebase.js";
 import {
   doc,
@@ -16,10 +8,7 @@ import {
   deleteDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// ─── USERS ───────────────────────────────────────────────────
-// KEY RULE: uid = CareChain ID for patients (CC-XXXX-XX)
-//           uid = firebaseUid for hospitals and police
-// script.js searches users where role==="patient" and filters by p.uid (CareChain ID)
+
 const users = [
   // ── PATIENTS ── uid = CareChain ID so searchPatients() works
   {
